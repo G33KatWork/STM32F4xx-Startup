@@ -1,6 +1,10 @@
+#File endings
 *.o
 *.d
 *.bin
 *.elf
 *.map
 
+#Directories
+obj
+install
