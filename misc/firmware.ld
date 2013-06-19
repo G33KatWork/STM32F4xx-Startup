@@ -7,63 +7,54 @@ MEMORY
 	sram (rwx)		: ORIGIN = 0x20000000, LENGTH = 128K
 }
 
-_estack = 0x10010000; /* highest stack address */
-
+/* Define sections. */
 SECTIONS
 {
-    /* .text and .rodata sections */
-    .text :
-    {
-        /* Mark start of text section */
-        _text = .;
+    . = ORIGIN(flash);
 
-        /* Interrupt vectors */
-        __isr_vector_start = .;
-        KEEP(*(.isr_vector))
-        __isr_vector_end = .;
+    .text : {
+        *(.vectors) /* Vector table */
+        *(.text*)   /* Program code */
+        . = ALIGN(4);
+        *(.rodata*) /* Read-only data */
+        . = ALIGN(4);
+    } >flash
 
-        *(.text*)
-        *(.rodata*)
-        _etext = .;
-        _idata = .;
-
+    /* exception index - required due to libgcc.a issuing /0 exceptions */
+    __exidx_start = .;
+    .ARM.exidx : {
+           *(.ARM.exidx*)
     } > flash
+    __exidx_end = .;
 
-    /* .data section */
-    .data :
-    {
+
+    _etext = .;
+
+    .data : {
         _data = .;
-        *(vtable)
-        *(.data*)
+        *(.data*)   /* Read-write initialized data */
+        . = ALIGN(4);
         _edata = .;
-    } > ccmram AT>flash
+    } >ccmram AT >flash
 
-    /*.bss section*/
-    .bss :
-    {
-        _bss = .;
-        *(.bss*)
+    .bss : {
+        *(.bss*)    /* Read-write zero initialized data */
         *(COMMON)
+        . = ALIGN(4);
         _ebss = .;
-    } > ccmram
+    } >ccmram
 
+    /* exception unwind data - required due to libgcc.a issuing /0 exceptions */
+    .ARM.extab : {
+        *(.ARM.extab*)
+    } >ccmram
+
+    . = ALIGN(4);
     end = .;
 
     /* Heap */
     . = ALIGN(256);
     _start_heap = .;
-
-    /* Stack */
-    /* defined by _estack at the top of script */
-
-    .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) }
-
-    /* Remove debug information from the standard libraries */
-    /DISCARD/ :
-    {
-        *(.note.GNU-stack)
-        libc.a ( * )
-        libgcc.a ( * )
-        libm.a ( * )
-    }
 }
+
+PROVIDE(_stack = ORIGIN(ccmram) + LENGTH(ccmram));

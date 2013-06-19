@@ -4,12 +4,11 @@
 #include <SysTick.h>
 #include <Debug.h>
 
-extern uint32_t _estack[];
-extern uint32_t _data[];
-extern uint32_t _idata[];
-extern uint32_t _edata[];
-extern uint32_t _bss[];
-extern uint32_t _ebss[];
+extern uint32_t _stack;
+extern uint32_t _etext;
+extern uint32_t _data;
+extern uint32_t _edata;
+extern uint32_t _ebss;
 
 void Reset_Handler() __attribute__((naked,noreturn));
 void Default_Handler() __attribute__((naked,noreturn));
@@ -18,12 +17,16 @@ int main();
 
 void Reset_Handler()
 {
-	// Copy the data segment initializers from flash to SRAM.
-	uint32_t *src=_idata;
-	for(uint32_t *dest=_data;dest<_edata;dest++) *dest=*src++;
+	volatile uint32_t *src, *dest;
 
-	// Zero fill the bss segment.
-	for(uint32_t *dest=_bss;dest<_ebss;dest++) *dest=0;
+	//Set main stackpointer
+	__asm__("MSR msp, %0" : : "r"(&_stack));
+
+	for (src = &_etext, dest = &_data; dest < &_edata; src++, dest++)
+		*dest = *src;
+
+	while (dest < &_ebss)
+		*dest++ = 0;
 
 	//Configure system clocks and stuff
 	SystemInit();
@@ -139,9 +142,9 @@ void CRYP_IRQHandler() __attribute__((weak,alias("Default_Handler")));
 void HASH_RNG_IRQHandler() __attribute__((weak,alias("Default_Handler")));
 void FPU_IRQHandler() __attribute__((weak,alias("Default_Handler")));
 
-__attribute__ ((section(".isr_vector"))) const void *InterruptVectors[]=
+__attribute__ ((section(".vectors"))) const void *InterruptVectors[]=
 {
-	_estack,
+	&_stack,
 	Reset_Handler,
 	NMI_Handler,
 	HardFault_Handler,

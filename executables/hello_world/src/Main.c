@@ -34,6 +34,13 @@ int main()
 	DEBUG_MSG("Allocated on heap: %p\r\n", foo);
 
 	//You spin me right round, baby right round
-	while(1)
-		DEBUG_MSG("A");
+	while(1);
 }
+
+#ifdef USE_FULL_ASSERT
+void assert_failed(uint8_t* file, uint32_t line)
+{
+	ERROR_MSG("Assertion failed in file %s:%d\r\n", file, line);
+	while(1);	
+}
+#endif
