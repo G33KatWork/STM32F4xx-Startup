@@ -2,14 +2,14 @@
   ******************************************************************************
   * @file    stm32f4xx_pwr.h
   * @author  MCD Application Team
-  * @version V1.0.2
-  * @date    05-March-2012
+  * @version V1.1.0
+  * @date    11-January-2013
   * @brief   This file contains all the functions prototypes for the PWR firmware 
   *          library.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -98,9 +98,12 @@
   * @{
   */
 
-#define PWR_Regulator_Voltage_Scale1    ((uint32_t)0x00004000)
-#define PWR_Regulator_Voltage_Scale2    ((uint32_t)0x00000000)
-#define IS_PWR_REGULATOR_VOLTAGE(VOLTAGE) (((VOLTAGE) == PWR_Regulator_Voltage_Scale1) || ((VOLTAGE) == PWR_Regulator_Voltage_Scale2))
+#define PWR_Regulator_Voltage_Scale1    ((uint32_t)0x0000C000)
+#define PWR_Regulator_Voltage_Scale2    ((uint32_t)0x00008000)
+#define PWR_Regulator_Voltage_Scale3    ((uint32_t)0x00004000)
+#define IS_PWR_REGULATOR_VOLTAGE(VOLTAGE) (((VOLTAGE) == PWR_Regulator_Voltage_Scale1) || \
+                                           ((VOLTAGE) == PWR_Regulator_Voltage_Scale2) || \
+                                           ((VOLTAGE) == PWR_Regulator_Voltage_Scale3))
  
 /**
   * @}

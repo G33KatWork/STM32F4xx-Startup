@@ -2,33 +2,31 @@
   ******************************************************************************
   * @file    stm32f4xx_syscfg.c
   * @author  MCD Application Team
-  * @version V1.0.2
-  * @date    05-March-2012
+  * @version V1.1.0
+  * @date    11-January-2013
   * @brief   This file provides firmware functions to manage the SYSCFG peripheral.
   *
-  *  @verbatim
-  *  
-  *          ===================================================================
-  *                                 How to use this driver
-  *          ===================================================================
-  *                  
-  *          This driver provides functions for:
-  *          
-  *          1. Remapping the memory accessible in the code area using SYSCFG_MemoryRemapConfig()
-  *              
-  *          2. Manage the EXTI lines connection to the GPIOs using SYSCFG_EXTILineConfig()
-  *            
-  *          3. Select the ETHERNET media interface (RMII/RII) using SYSCFG_ETH_MediaInterfaceConfig()
-  *
-  *  @note  SYSCFG APB clock must be enabled to get write access to SYSCFG registers,
-  *         using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-  *                 
-  *  @endverbatim
-  *      
+ @verbatim
+    
+ ===============================================================================
+                     ##### How to use this driver #####
+ ===============================================================================
+    [..] This driver provides functions for:
+            
+       (#) Remapping the memory accessible in the code area using SYSCFG_MemoryRemapConfig()
+                            
+       (#) Manage the EXTI lines connection to the GPIOs using SYSCFG_EXTILineConfig()
+              
+       (#) Select the ETHERNET media interface (RMII/RII) using SYSCFG_ETH_MediaInterfaceConfig()
+  
+       -@- SYSCFG APB clock must be enabled to get write access to SYSCFG registers,
+           using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+                   
+ @endverbatim      
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
   *
   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
   * You may not use this file except in compliance with the License.
@@ -62,6 +60,7 @@
 /* Private define ------------------------------------------------------------*/
 /* ------------ RCC registers bit address in the alias region ----------- */
 #define SYSCFG_OFFSET             (SYSCFG_BASE - PERIPH_BASE)
+
 /* ---  PMC Register ---*/ 
 /* Alias word address of MII_RMII_SEL bit */ 
 #define PMC_OFFSET                (SYSCFG_OFFSET + 0x04) 
@@ -101,8 +100,8 @@ void SYSCFG_DeInit(void)
   *         This parameter can be one of the following values:
   *            @arg SYSCFG_MemoryRemap_Flash:       Main Flash memory mapped at 0x00000000  
   *            @arg SYSCFG_MemoryRemap_SystemFlash: System Flash memory mapped at 0x00000000
-  *            @arg SYSCFG_MemoryRemap_FSMC:        FSMC (Bank1 (NOR/PSRAM 1 and 2) mapped at 0x00000000
-  *            @arg SYSCFG_MemoryRemap_SRAM:        Embedded SRAM (112kB) mapped at 0x00000000
+  *            @arg SYSCFG_MemoryRemap_FSMC:        FSMC (Bank1 (NOR/PSRAM 1 and 2) mapped at 0x00000000   
+  *            @arg SYSCFG_MemoryRemap_SRAM:        Embedded SRAM (112kB) mapped at 0x00000000          
   * @retval None
   */
 void SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap)
@@ -116,10 +115,14 @@ void SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap)
 /**
   * @brief  Selects the GPIO pin used as EXTI Line.
   * @param  EXTI_PortSourceGPIOx : selects the GPIO port to be used as source for
-  *          EXTI lines where x can be (A..I).
+  *          EXTI lines where x can be (A..I)  for STM32F40xx/STM32F41xx 
+  *         and STM32F427x/STM32F437x devices.
+  *            
   * @param  EXTI_PinSourcex: specifies the EXTI line to be configured.
   *           This parameter can be EXTI_PinSourcex where x can be (0..15, except
-  *           for EXTI_PortSourceGPIOI x can be (0..11).
+  *           for EXTI_PortSourceGPIOI x can be (0..11) for STM32F40xx/STM32F41xx 
+  *           and STM32F427x/STM32F437x devices. 
+  *             
   * @retval None
   */
 void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex)
