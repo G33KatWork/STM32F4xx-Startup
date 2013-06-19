@@ -37,6 +37,10 @@ For debugging with gdb, use
 
 	make debug-gdb
 
+If you don't use an STLink v2 compatible JTAG adapter, you can change the JTAG_ADAPTER variable in config.mak to match your adapter
+if there is already a correspondig rules file in /build/jtag_adapters available. If there isn't you need to write one. Please note,
+that at the current time the GDB debugging und uploading make targets are a bit hacky and may not work. Fixes are more than appreciated!
+
 The default firmware which gets uploaded is the hello_world executable. You can override this
 behaviour by setting the environment variable **FIRMWARE** to a name of a target or you can use
 special targets like **upload-hello_world**.
