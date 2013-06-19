@@ -21,8 +21,8 @@ CXXFLAGS =
 ASFLAGS = 
 
 # Linker flags
-LDFLAGS  = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -nostartfiles
-LDFLAGS += -Wl,-T,$(ROOT)/misc/firmware.ld,-Map,$(SELF_DIR)/hello_world/$(TARGET).map
+LDFLAGS  = -mthumb -mcpu=cortex-m4 -mfix-cortex-m3-ldrd -mfloat-abi=hard -mfpu=fpv4-sp-d16 -nostartfiles
+LDFLAGS += -Wl,-T,$(ROOT)/misc/firmware.ld,-Map,$(SELF_DIR)/hello_world/$(TARGET).map -Wl,--gc-sections
 
 # Additional include paths to consider
 INCLUDES =	$(ROOT)/libs/cmsis/inc \
@@ -39,6 +39,6 @@ OBJDIR = obj
 SRCDIR = src
 
 # Additional defines
-DEFINES := -DDEBUG
+DEFINES := 
 
 include $(ROOT)/build/targets/executable.mak

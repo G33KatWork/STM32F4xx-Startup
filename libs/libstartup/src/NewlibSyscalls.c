@@ -88,7 +88,7 @@ caddr_t _sbrk(int incr)
 
 	if (heap_end + incr > stack_ptr)
 	{
-		fprintf(stderr, "ERROR: Heap and Stack collided\r\n");
+		ERROR_MSG("ERROR: Heap and Stack collided\r\n");
 		errno = ENOMEM;
 		return (caddr_t)-1;
 	}
@@ -100,7 +100,7 @@ caddr_t _sbrk(int incr)
 
 void _exit(int code)
 {
-	fprintf(stderr, "Application exited with code: %d\r\n", code);
+	ERROR_MSG("Application exited with code: %d\r\n", code);
 	while(1);
 }
 
@@ -108,14 +108,14 @@ void _exit(int code)
 __attribute__((weak))
 int _file_fstat(int fd, struct stat *st)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
 __attribute__((weak))
 int _file_write(int fd, void *buf, size_t len)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
@@ -128,34 +128,34 @@ int _error_write(int fd, void *buf, size_t len)
 __attribute__((weak))
 int _file_read(int fd, void *buf, size_t len)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
 __attribute__((weak))
 off_t _file_lseek(int fd, off_t offset, int whence)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
 __attribute__((weak))
 int _file_close(int fd)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
 __attribute__((weak))
 int _file_isatty(int fd)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }
 
 __attribute__((weak))
 int _open(const char *name, int flags, int mode)
 {
-    fprintf(stderr, "Error: Unimplemented syscall: %s\r\n", __func__);
+    ERROR_MSG("Error: Unimplemented syscall: %s\r\n", __func__);
     return EBADF;
 }

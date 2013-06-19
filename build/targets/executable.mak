@@ -9,12 +9,12 @@ SRCDIR-$(TARGET) := $(addprefix $(CURDIR-$(TARGET))/,$(SRCDIR))
 # C compiler flags
 CFLAGS-$(TARGET) := $(CFLAGS)
 CFLAGS-$(TARGET) += $(addprefix -I,$(INCLUDES))
-CFLAGS-$(TARGET) += $(DEFINES)
+CFLAGS-$(TARGET) += $(GLOBAL_DEFINES) $(DEFINES)
 
 # C++ compiler flags
 CXXFLAGS-$(TARGET) := $(CXXFLAGS)
 CXXFLAGS-$(TARGET) += $(addprefix -I,$(INCLUDES))
-CXXFLAGS-$(TARGET) += $(DEFINES)
+CXXFLAGS-$(TARGET) += $(GLOBAL_DEFINES) $(DEFINES)
 
 # LD flags
 LDFLAGS-$(TARGET) := $(LDFLAGS)
@@ -88,6 +88,7 @@ $(OBJDIR-$(TARGET))/%.o: $(SRCDIR-$(TARGET))/%.S
 
 upload-$(TARGET): $(OBJDIR-$(TARGET))/$(TARGET).bin
 	$(call cmd_msg,OPENOCD,$<)
+#	$(Q)openocd -f interface/jlink.cfg -f target/stm32f4x.cfg
 	$(Q)openocd -f interface/stlink-v2.cfg -f target/stm32f4x_stlink.cfg \
 	-c init -c "reset halt" -c "stm32f2x mass_erase 0" \
 	-c "flash write_bank 0 $^ 0" \

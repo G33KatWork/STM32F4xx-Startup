@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#ifdef DEBUG
 uint32_t DebugEnabled = 0;
 
 void EnableDebugOutput(DebugDevice device)
@@ -18,3 +19,15 @@ void DebugPrintChar(char c)
 	if(DebugEnabled)
 		USART_SendChar(c);
 }
+
+#else
+
+void EnableDebugOutput(DebugDevice device)
+{
+}
+
+void DebugPrintChar(char c)
+{
+}
+
+#endif

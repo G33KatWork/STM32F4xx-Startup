@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <SystemInit.h>
 #include <SysTick.h>
+#include <Debug.h>
 
 extern uint32_t _estack[];
 extern uint32_t _data[];
@@ -36,13 +37,13 @@ void Reset_Handler()
 
 void Default_Handler()
 {
-	fprintf(stderr, "!!Default IRQ Handler!!\r\n");
+	ERROR_MSG("!!Default IRQ Handler!!\r\n");
 	for(;;);
 }
 
 void HardFault_Handler()
 {
-	fprintf(stderr, "!!HardFault occured!!\r\n");
+	ERROR_MSG("!!HardFault occured!!\r\n");
 	for(;;);
 }
 

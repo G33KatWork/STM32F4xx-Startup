@@ -9,12 +9,12 @@ SRCDIR-$(TARGET) := $(addprefix $(CURDIR-$(TARGET))/,$(SRCDIR))
 # C compiler flags
 CFLAGS-$(TARGET) := $(CFLAGS)
 CFLAGS-$(TARGET) += $(addprefix -I,$(INCLUDES))
-CFLAGS-$(TARGET) += $(DEFINES)
+CFLAGS-$(TARGET) += $(GLOBAL_DEFINES) $(DEFINES)
 
 # C++ compiler flags
 CXXFLAGS-$(TARGET) := $(CXXFLAGS)
 CXXFLAGS-$(TARGET) += $(addprefix -I,$(INCLUDES))
-CXXFLAGS-$(TARGET) += $(DEFINES)
+CXXFLAGS-$(TARGET) += $(GLOBAL_DEFINES) $(DEFINES)
 
 # Determinte objects to be created
 OBJECTS-$(TARGET) := $(ASOURCES:%.S=%.o)

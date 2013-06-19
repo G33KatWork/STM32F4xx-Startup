@@ -19,9 +19,9 @@ Features
 How to use
 ----------
 
-You can use this toolchain if you need one: https://github.com/G33KatWork/STM32-Toolchain
+You can use this toolchain if you need one: https://launchpad.net/gcc-arm-embedded
 
-After you have built and installed the toolchain, you can build the library with a simple
+After you have installed the toolchain, you can build the library with a simple
 
 	make
 

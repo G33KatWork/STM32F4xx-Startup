@@ -30,13 +30,13 @@ SECTIONS
     } > flash
 
     /* .data section */
-    .data : AT(ADDR(.text) + SIZEOF(.text))
+    .data :
     {
         _data = .;
         *(vtable)
         *(.data*)
         _edata = .;
-    } > ccmram
+    } > ccmram AT>flash
 
     /*.bss section*/
     .bss :

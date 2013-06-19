@@ -1,5 +1,6 @@
 ROOT := $(PWD)
 include $(ROOT)/build/base.mak
+include $(ROOT)/config.mak
 
 FIRMWARE ?= hello_world
 
